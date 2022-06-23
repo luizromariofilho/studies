@@ -1,0 +1,26 @@
+AllCops:
+  TargetRubyVersion: 2.7.2
+  Exclude:
+    - 'bin/**/*'
+    - 'vendor/**/*'
+    - 'db/**/*'
+    - 'config/**/*'
+    - 'script/**/*'
+    - 'spec/rails_helper.rb'
+Rails:
+  Enabled: true
+Metrics/BlockLength:
+  ExcludedMethods: ['describe', 'context', 'feature', 'scenario', 'let']  
+Metrics/LineLength:
+  Max: 120
+Documentation:
+  Enabled: false
+Style/FrozenStringLiteralComment:
+  EnforcedStyle: always_true
+  Enabled: false
+Layout/EmptyLinesAroundClassBody:
+  EnforcedStyle: empty_lines
+Layout/EmptyLineAfterMagicComment:
+  Enabled: false
+Lint/MissingCopEnableDirective:
+  Enabled: false

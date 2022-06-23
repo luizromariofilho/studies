@@ -1,0 +1,29 @@
+# config/database.rb
+
+default: &default
+  adapter: mysql2
+  encoding: utf8
+  host: <%= ENV["DB_HOST"] %>
+  port: <%= ENV["DB_PORT"] %>
+  username: <%= ENV["DB_USER"] %>
+  password: <%= ENV["DB_PASS"] %>
+  timeout: 5000
+  # For details on connection pooling, see Rails configuration guide
+  # http://guides.rubyonrails.org/configuring.html#database-pooling
+  pool: <%= Integer(ENV.fetch("RAILS_MAX_THREADS") { 5 }) * Integer(ENV.fetch("WEB_CONCURRENCY") { 2 }) %>
+  
+development:
+  <<: *default
+  database: <%= "#{ENV["DB_NAME"]}_development" %>
+  
+test:
+  <<: *default
+  database: <%= "#{ENV["DB_NAME"]}_test" %>
+staging:
+  <<: *default
+  database: <%= ENV["DB_NAME"] %>
+  
+production:
+  <<: *default
+  database: <%= ENV["DB_NAME"] %>
+

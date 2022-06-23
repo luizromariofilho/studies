@@ -1,0 +1,77 @@
+version: '3.8'
+services:
+  postgres:
+    image: postgres:14
+    volumes:
+      - ./tmp/db:/var/lib/postgresql/data
+      - ./.docker/init.sql:/docker-entrypoint-initdb.d/init.sql
+    env_file:
+      - '.env'
+    networks:
+      - backend
+  
+  company_example_api:
+    image: company_example/api
+    build:
+      context: .
+      dockerfile: ./.docker/Dockerfile
+      args:
+        - USER_NAME=${USER:-root}
+        - USER_ID=${USER_ID:-1000}
+    command: bash -c "rm -f tmp/pids/server.pid && bundle exec puma -C config/puma.rb"
+    container_name: company_example_api
+    stdin_open: true
+    tty: true
+    volumes:
+      - ./:/app
+    ports:
+      - "3000:3000"
+    depends_on:
+      - postgres
+      - redis
+    networks:
+      - backend  
+    env_file:
+      - '.env'
+  
+  mailcatcher:
+    image: schickling/mailcatcher
+    networks:
+      - backend
+    ports:
+      - "1025:1025"
+      - "1080:1080"
+  
+  redis:
+    image: 'redis'
+    command: redis-server --requirepass root123
+    ports:
+      - '6379:6379'
+    volumes:
+      - 'redis:/data'
+    networks:
+      - backend
+    env_file:
+      - '.env'
+  
+  sidekiq:
+    image: company_example/api
+    command: bundle exec sidekiq  -C config/sidekiq.yml
+    container_name: company_example_sidekiq
+    volumes:
+      - ./:/app
+    depends_on:
+      - company_example_api
+      - postgres
+      - redis
+    networks:
+      - backend  
+    env_file:
+      - '.env'
+
+volumes:
+  postgres:
+  company_example_api:
+  redis:
+networks:
+  backend:
