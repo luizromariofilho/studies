@@ -1,4 +1,4 @@
-FROM ruby:3.0.1
+FROM ruby:3.0
 RUN apt-get update -qq && apt-get install -y --no-install-recommends \
   nodejs postgresql-client cron locales build-essential npm \
   libpq-dev sudo vim git curl imagemagick libzbar-dev liblzma-dev zlib1g-dev \
@@ -23,7 +23,7 @@ ENV USER_ID $USER_ID
 RUN groupadd -g $USER_ID $USER_NAME && useradd -u $USER_ID -g $USER_NAME --create-home $USER_NAME
 RUN echo "$USER_NAME ALL=(root) NOPASSWD:ALL" > /etc/sudoers.d/user && chmod 0440 /etc/sudoers.d/user
 
-ENV APP_ROOT /app
+ENV APP_ROOT /api
 RUN mkdir -p $APP_ROOT && chown $USER_NAME:$USER_NAME $APP_ROOT
 
 # Set command execution path

@@ -1,10 +1,10 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '3.0.1'
+ruby '3.0.4'
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
-gem 'rails', '~> 7.0.0'
+gem 'rails', '~> 7.0.4'
 
 # Use postgresql as the database for Active Record
 gem 'pg', '~> 1.1'
@@ -36,6 +36,9 @@ gem 'bootsnap', require: false
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 gem 'rack-cors'
 
+gem 'faraday'
+gem 'oj'
+
 # format logs and reduce default logs
 gem 'lograge'
 gem 'logstash-event'
@@ -53,7 +56,7 @@ group :development, :test do
   gem 'database_cleaner'
   gem 'dotenv-rails'
   gem 'factory_bot_rails'
-  gem 'faker'
+  gem 'ffaker'
   gem 'mailcatcher'
   gem 'parallel_tests'
   gem 'pry'
@@ -67,6 +70,7 @@ group :development, :test do
 end
 
 group :development do
-  # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
-  # gem "spring"
+  gem 'listen', '~> 3.3'
+  # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
+  gem 'spring'
 end

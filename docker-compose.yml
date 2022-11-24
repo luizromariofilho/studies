@@ -1,7 +1,8 @@
 version: '3.8'
 services:
   postgres:
-    image: postgres:14
+    image: postgres
+    container_name: studies-database
     volumes:
       - ./tmp/db:/var/lib/postgresql/data
       - ./.docker/init.sql:/docker-entrypoint-initdb.d/init.sql
@@ -9,9 +10,9 @@ services:
       - '.env'
     networks:
       - backend
-  
-  company_example_api:
-    image: company_example/api
+
+  api:
+    image: studies/api
     build:
       context: .
       dockerfile: ./.docker/Dockerfile
@@ -19,11 +20,11 @@ services:
         - USER_NAME=${USER:-root}
         - USER_ID=${USER_ID:-1000}
     command: bash -c "rm -f tmp/pids/server.pid && bundle exec puma -C config/puma.rb"
-    container_name: company_example_api
+    container_name: studies_api
     stdin_open: true
     tty: true
     volumes:
-      - ./:/app
+      - ./:/api
     ports:
       - "3000:3000"
     depends_on:
@@ -55,13 +56,13 @@ services:
       - '.env'
   
   sidekiq:
-    image: company_example/api
+    image: studies/api
     command: bundle exec sidekiq  -C config/sidekiq.yml
-    container_name: company_example_sidekiq
+    container_name: studies_sidekiq
     volumes:
-      - ./:/app
+      - ./:/api
     depends_on:
-      - company_example_api
+      - api
       - postgres
       - redis
     networks:
@@ -71,7 +72,7 @@ services:
 
 volumes:
   postgres:
-  company_example_api:
+  studies_api:
   redis:
 networks:
   backend:

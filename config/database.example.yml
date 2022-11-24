@@ -1,7 +1,7 @@
 # config/database.rb
 
 default: &default
-  adapter: mysql2
+  adapter: postgresql
   encoding: utf8
   host: <%= ENV["DB_HOST"] %>
   port: <%= ENV["DB_PORT"] %>
