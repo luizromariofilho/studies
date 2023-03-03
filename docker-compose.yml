@@ -57,7 +57,7 @@ services:
   
   sidekiq:
     image: studies/api
-    command: bundle exec sidekiq  -C config/sidekiq.yml
+    command: bundle exec sidekiq -C config/sidekiq.yml
     container_name: studies_sidekiq
     volumes:
       - ./:/api

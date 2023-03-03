@@ -1,22 +1,22 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '3.0.4'
+ruby '3.1.2'
 
-# Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
-gem 'rails', '~> 7.0.4'
+# Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
+gem 'rails'
 
 # Use postgresql as the database for Active Record
 gem 'pg', '~> 1.1'
 
 # Use the Puma web server [https://github.com/puma/puma]
-gem 'puma', '~> 5.0'
+gem 'puma'
 
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem 'jbuilder'
 
 # Use Redis adapter to run Action Cable in production
-gem 'redis', '~> 4.0'
+gem 'redis'
 
 # Use Kredis to get higher-level data types in Redis [https://github.com/rails/kredis]
 # gem "kredis"
@@ -44,12 +44,17 @@ gem 'lograge'
 gem 'logstash-event'
 
 # sidekiq
-gem 'sidekiq', '~> 5.0'
-gem 'sinatra', require: false
+gem 'sidekiq'
+gem 'sinatra'
 
+gem 'cancancan'
+gem 'devise'
+gem 'jwt'
+gem 'rolify'
+
+gem 'awesome_print'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'awesome_print'
   gem 'brakeman'
   gem 'bullet'
   gem 'cpf_faker'
